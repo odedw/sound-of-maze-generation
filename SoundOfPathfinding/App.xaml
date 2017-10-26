@@ -1,0 +1,13 @@
+﻿<Application x:Class="SoundOfPathfinding.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:SoundOfPathfinding"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <system:Double x:Key="CellSize">10</system:Double>
+        <local:CellTypeToColor x:Key="CellTypeToColor"/>
+        <local:VisitedToMaskVisibility x:Key="VisitedToMaskVisibility"/>
+
+    </Application.Resources>
+</Application>

@@ -1,0 +1,38 @@
+﻿<Window x:Class="SoundOfPathfinding.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SoundOfPathfinding"
+        mc:Ignorable="d"
+        Title="Sound of Pathfinding" Height="720" Width="1280" WindowStartupLocation="CenterScreen"
+        HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Black">
+    <Window.Resources>
+        <DataTemplate x:Key="CellTemplate">
+            <Grid Height="{StaticResource CellSize}" Width="{StaticResource CellSize}" Margin="0" Background="Black">
+                <Grid.ToolTip>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Row}"/>
+                        <TextBlock Text="," />
+                        <TextBlock Text="{Binding Col}"/>
+                    </StackPanel>
+                </Grid.ToolTip>
+                <Grid Margin="0.5" Background="{Binding CellType, Converter={StaticResource CellTypeToColor}}">
+                </Grid>
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Key="Space" Command="{Binding GenerateCommand}" />
+    </Window.InputBindings>
+    <Grid  HorizontalAlignment="Center"  Height="600" Width="800">
+        <ItemsControl x:Name="ItemsControl" ItemTemplate="{DynamicResource CellTemplate}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal"
+                               />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+    </Grid>
+</Window>
