@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SoundOfPathfinding.Generators;
+using SoundOfPathfinding.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -12,45 +14,33 @@ namespace SoundOfPathfinding
     public class ViewModel : INotifyPropertyChanged
     {
         //public Dispatcher Dispatcher { get; set; }
-        public int Cols { get; set; }
-        public int Rows { get; set; }
+
         public ICommand GenerateCommand { get; set; }
 
-        private BindingList<Cell> _cells = new BindingList<Cell>();
-        public BindingList<Cell> Cells
+
+        private Maze _maze;
+        public Maze Maze
         {
-            get { return _cells; }
+            get { return _maze; }
             set
             {
-                if (_cells == value) return;
-                _cells = value;
-                RaisePropertyChanged("Cells");
+                if (_maze == value) return;
+                _maze = value;
+                RaisePropertyChanged("Maze");
             }
         }
 
         public ViewModel(int rows, int cols)
         {
-            Cells = new BindingList<Cell>();
-            Rows = rows;
-            Cols = cols;
+            Maze = new Maze(rows, cols);
             var rand = new Random();
-            for (int i = 0; i < Rows; i++)
-            {
-                var lastType = CellType.Floor;
-                for (int j = 0; j < Cols; j++)
-                {
-                    lastType = lastType == CellType.Floor ? CellType.Wall : CellType.Floor;
-                    Cells.Add(new Cell() { CellType = CellType.Floor, Row=i, Col=j});
-                    
-                }
-            }
-
+            
             GenerateCommand = new RelayCommand(o =>
             {
-                foreach (var cell in Cells)
+                var generator = new DepthFirstSearchGenerator(Maze);
+                while (generator.NextStep())
                 {
-                    cell.CellType = rand.NextDouble() > 0.5 ? CellType.Floor : CellType.Wall;
-                    cell.Visited = rand.NextDouble() > 0.5;
+
                 }
             });
 

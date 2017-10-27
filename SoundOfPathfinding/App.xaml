@@ -8,6 +8,8 @@
         <system:Double x:Key="CellSize">10</system:Double>
         <local:CellTypeToColor x:Key="CellTypeToColor"/>
         <local:VisitedToMaskVisibility x:Key="VisitedToMaskVisibility"/>
+        <local:CellToSpriteRect x:Key="CellToSpriteRect"/>
 
+        <BitmapImage x:Key="GridSprite" UriSource="./Resources/GridSprite.png" />
     </Application.Resources>
 </Application>

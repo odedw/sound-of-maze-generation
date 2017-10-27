@@ -9,16 +9,12 @@
         HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Black">
     <Window.Resources>
         <DataTemplate x:Key="CellTemplate">
-            <Grid Height="{StaticResource CellSize}" Width="{StaticResource CellSize}" Margin="0" Background="Black">
-                <Grid.ToolTip>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Row}"/>
-                        <TextBlock Text="," />
-                        <TextBlock Text="{Binding Col}"/>
-                    </StackPanel>
-                </Grid.ToolTip>
-                <Grid Margin="0.5" Background="{Binding CellType, Converter={StaticResource CellTypeToColor}}">
-                </Grid>
+            <Grid Height="{StaticResource CellSize}" Width="{StaticResource CellSize}" Margin="0" Background="Black" ToolTip="{Binding Description}">
+                <Rectangle>
+                    <Rectangle.Fill>
+                        <ImageBrush ImageSource="{StaticResource GridSprite}" ViewboxUnits="Absolute" Viewbox="{Binding Walls, Converter={StaticResource CellToSpriteRect}}"/>
+                    </Rectangle.Fill>
+                </Rectangle>
             </Grid>
         </DataTemplate>
     </Window.Resources>
