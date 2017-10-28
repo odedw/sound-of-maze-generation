@@ -24,7 +24,7 @@
     <Window.InputBindings>
         <KeyBinding Key="Space" Command="{Binding GenerateCommand}" />
     </Window.InputBindings>
-    <Grid >
+    <Grid Background="#222222" >
         <ItemsControl x:Name="ItemsControl" ItemTemplate="{DynamicResource CellTemplate}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
