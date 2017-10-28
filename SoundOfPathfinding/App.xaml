@@ -5,13 +5,13 @@
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <system:Double x:Key="CellSize">20</system:Double>
-        <local:CellTypeToColor x:Key="CellTypeToColor"/>
-        <local:VisitedToMaskVisibility x:Key="VisitedToMaskVisibility"/>
+        <system:Double x:Key="CellSize">12</system:Double>
+        <system:Int16 x:Key="Rows">30</system:Int16>
+        <system:Int16 x:Key="Cols">40</system:Int16>
+        <local:CellStateToColor x:Key="CellStateToColor"/>
         <local:CellToSpriteRect x:Key="CellToSpriteRect"/>
 
         <BitmapImage x:Key="GridSprite" UriSource="./Resources/GridSprite.png" />
-        <BitmapImage x:Key="DawnlikeSprite" UriSource="./Resources/DawnlikeSprite.png" />
 
     </Application.Resources>
 </Application>

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -13,10 +14,9 @@ namespace SoundOfPathfinding
 {
     public class ViewModel : INotifyPropertyChanged
     {
-        //public Dispatcher Dispatcher { get; set; }
+        private readonly TimeSpan _timerTickInterval = TimeSpan.FromMilliseconds(15);
 
         public ICommand GenerateCommand { get; set; }
-
 
         private Maze _maze;
         public Maze Maze
@@ -26,7 +26,7 @@ namespace SoundOfPathfinding
             {
                 if (_maze == value) return;
                 _maze = value;
-                RaisePropertyChanged("Maze");
+                NotifyPropertyChanged();
             }
         }
 
@@ -38,7 +38,7 @@ namespace SoundOfPathfinding
 
             GenerateCommand = new RelayCommand(o =>
             {
-                var timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(1) };
+                var timer = new DispatcherTimer { Interval = _timerTickInterval };
                 timer.Start();
                 timer.Tick += (sender, args) =>
                 {
@@ -54,10 +54,9 @@ namespace SoundOfPathfinding
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void RaisePropertyChanged(string propertyName)
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
-            // take a copy to prevent thread issues
-            PropertyChanged?.Invoke (this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
     }

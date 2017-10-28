@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace SoundOfPathfinding
 {
@@ -18,32 +19,21 @@ namespace SoundOfPathfinding
             {
                 if (_walls == value) return;
                 _walls = value;
-                RaisePropertyChanged("Walls");
+                NotifyPropertyChanged();
                 RaisePropertyChanged("Description");
             }
         }
 
-        private CellState _cellType;
-        public CellState CellType
+        private CellState _cellState;
+        public CellState CellState
         {
-            get { return _cellType; }
+            get { return _cellState; }
             set
             {
-                if (_cellType == value) return;
-                _cellType = value;
-                RaisePropertyChanged("CellType");
-            }
-        }
+                if (_cellState == value) return;
+                _cellState = value;
+                NotifyPropertyChanged();
 
-        private bool _visited;
-        public bool Visited
-        {
-            get { return _visited; }
-            set
-            {
-                if (_visited == value) return;
-                _visited = value;
-                RaisePropertyChanged("Visited");
             }
         }
 
@@ -73,15 +63,19 @@ namespace SoundOfPathfinding
             // take a copy to prevent thread issues
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         #endregion
     }
 
     public enum CellState
     {
-        Rock,
-        Floor,
-        Start,
-        End
+        Unvisited,
+        Visited,
+        Visiting
     }
 
     [Flags]

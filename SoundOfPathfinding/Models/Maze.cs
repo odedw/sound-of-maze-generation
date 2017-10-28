@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,7 +21,7 @@ namespace SoundOfPathfinding.Models
             {
                 if (_cells == value) return;
                 _cells = value;
-                RaisePropertyChanged("Cells");
+                NotifyPropertyChanged();
             }
         }
 
@@ -34,8 +35,7 @@ namespace SoundOfPathfinding.Models
             {
                 for (int j = 0; j < Cols; j++)
                 {
-                    Cells.Add(new Cell() { CellType = CellState.Floor, Row = i, Col = j });
-
+                    Cells.Add(new Cell() { Row = i, Col = j });
                 }
             }
 
@@ -64,9 +64,8 @@ namespace SoundOfPathfinding.Models
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void RaisePropertyChanged(string propertyName)
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
-            // take a copy to prevent thread issues
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion

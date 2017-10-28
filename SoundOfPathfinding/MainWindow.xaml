@@ -15,13 +15,16 @@
                         <ImageBrush ImageSource="{StaticResource GridSprite}" ViewboxUnits="Absolute" Viewbox="{Binding Walls, Converter={StaticResource CellToSpriteRect}}"/>
                     </Rectangle.Fill>
                 </Rectangle>
+                <Grid Background="{Binding CellState, Converter={StaticResource CellStateToColor}}">
+                    
+                </Grid>
             </Grid>
         </DataTemplate>
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Key="Space" Command="{Binding GenerateCommand}" />
     </Window.InputBindings>
-    <Grid  HorizontalAlignment="Center"  Height="600" Width="800">
+    <Grid >
         <ItemsControl x:Name="ItemsControl" ItemTemplate="{DynamicResource CellTemplate}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>

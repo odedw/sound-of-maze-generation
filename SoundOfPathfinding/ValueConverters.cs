@@ -11,41 +11,25 @@ using System.Windows.Media;
 
 namespace SoundOfPathfinding
 {
-    public class CellTypeToColor : IValueConverter
+    public class CellStateToColor : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var color = Colors.White;
             switch ((CellState)value)
             {
-                case CellState.Rock:
-                    color = Colors.Black;
+                case CellState.Unvisited:
+                    color = Colors.Transparent;
                     break;
-                case CellState.Floor:
-                    color = Colors.White;
+                case CellState.Visited:
+                    color = Colors.Transparent;
                     break;
-                case CellState.Start:
-                    color = Colors.Green;
-                    break;
-                case CellState.End:
-                    color = Colors.Blue;
+                case CellState.Visiting:
+                    color = Color.FromArgb(200, Colors.Green.R, Colors.Green.G, Colors.Green.B);
                     break;
             }
             return new SolidColorBrush(color);
 
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class VisitedToMaskVisibility : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return (bool)value ? Visibility.Visible : Visibility.Hidden;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
