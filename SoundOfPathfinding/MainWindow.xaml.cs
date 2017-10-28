@@ -35,7 +35,6 @@ namespace SoundOfPathfinding
             ItemsControl.Width = cols * cellSize;
             ItemsControl.Height = rows * cellSize;
             DataContext = ViewModel = new ViewModel(rows, cols);
-            ItemsControl.ItemsSource = ViewModel.Maze.Cells;
         }
 
         //private void Button_Click(object sender, RoutedEventArgs e)

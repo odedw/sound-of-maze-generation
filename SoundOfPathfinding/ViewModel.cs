@@ -17,6 +17,7 @@ namespace SoundOfPathfinding
         private readonly TimeSpan _timerTickInterval = TimeSpan.FromMilliseconds(15);
 
         public ICommand GenerateCommand { get; set; }
+        public ICommand ResetCommand { get; set; }
 
         private Maze _maze;
         public Maze Maze
@@ -34,16 +35,21 @@ namespace SoundOfPathfinding
         {
             Maze = new Maze(rows, cols);
             var rand = new Random();
-                var generator = new DepthFirstSearchGenerator(Maze);
 
             GenerateCommand = new RelayCommand(o =>
             {
+                var generator = new DepthFirstSearchGenerator(Maze);
                 var timer = new DispatcherTimer { Interval = _timerTickInterval };
                 timer.Start();
                 timer.Tick += (sender, args) =>
                 {
                     if (!generator.NextStep()) timer.Stop();
                 };
+            });
+            ResetCommand = new RelayCommand(o =>
+            {
+                Maze = new Maze(rows, cols);
+
             });
 
         }
