@@ -29,7 +29,7 @@ namespace SoundOfPathfinding
         public MainWindow()
         {                       
             InitializeComponent();
-            DataContext = ViewModel = new ViewModel(60, 80);
+            DataContext = ViewModel = new ViewModel(30, 40);
             ItemsControl.ItemsSource = ViewModel.Maze.Cells;
         }
 

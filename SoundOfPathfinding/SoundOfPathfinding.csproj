@@ -57,6 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Extensions.cs" />
     <Compile Include="Generators\DepthFirstSearchGenerator.cs" />
     <Compile Include="Generators\IMazeGenerator.cs" />
     <Compile Include="Models\Cell.cs" />
@@ -106,6 +107,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\DawnlikeSprite.png" />
     <Content Include="Resources\GridSprite.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

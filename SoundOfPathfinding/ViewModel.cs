@@ -34,14 +34,16 @@ namespace SoundOfPathfinding
         {
             Maze = new Maze(rows, cols);
             var rand = new Random();
-            
+                var generator = new DepthFirstSearchGenerator(Maze);
+
             GenerateCommand = new RelayCommand(o =>
             {
-                var generator = new DepthFirstSearchGenerator(Maze);
-                while (generator.NextStep())
+                var timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(1) };
+                timer.Start();
+                timer.Tick += (sender, args) =>
                 {
-
-                }
+                    if (!generator.NextStep()) timer.Stop();
+                };
             });
 
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace SoundOfPathfinding
@@ -18,6 +19,7 @@ namespace SoundOfPathfinding
                 if (_walls == value) return;
                 _walls = value;
                 RaisePropertyChanged("Walls");
+                RaisePropertyChanged("Description");
             }
         }
 
@@ -49,7 +51,7 @@ namespace SoundOfPathfinding
         {
             get
             {
-                return $"{Row},{Col}";
+                return $"{Row},{Col}\n{Walls.ToString()}";
             }
         }
 
@@ -82,15 +84,16 @@ namespace SoundOfPathfinding
         End
     }
 
+    [Flags]
     public enum Direction
     {
-        North = 0,
-        East = 1,
-        South = 2,
-        West = 4
+        North = 1,
+        East = 2,
+        South = 4,
+        West = 8
     }
 
-    public static class Extensions
+    public static class DirectionExtensions
     {
         public static Direction Opposite(this Direction direction)
         {
