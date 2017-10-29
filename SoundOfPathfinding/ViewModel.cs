@@ -1,11 +1,14 @@
-﻿using SoundOfPathfinding.Generators;
+﻿using NAudio.Wave;
+using SoundOfPathfinding.Generators;
 using SoundOfPathfinding.Models;
+using SoundOfPathfinding.Sound;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -14,7 +17,9 @@ namespace SoundOfPathfinding
 {
     public class ViewModel : INotifyPropertyChanged
     {
-        private readonly TimeSpan _timerTickInterval = TimeSpan.FromMilliseconds(15);
+        private SineWaveProvider32 _sineWaveProvider = new SineWaveProvider32();
+
+        private readonly int _timerTickMs = 20;
 
         public ICommand GenerateCommand { get; set; }
         public ICommand ResetCommand { get; set; }
@@ -33,17 +38,32 @@ namespace SoundOfPathfinding
 
         public ViewModel(int rows, int cols)
         {
-            Maze = new Maze(rows, cols);
+             Maze = new Maze(rows, cols);
             var rand = new Random();
+            //_sineWaveProvider.SetWaveFormat(16000, 1); // 16kHz mono
+            //var device = new DirectSoundOut(DirectSoundOut.Devices.First().Guid, _timerTickMs);
+            //device.Init(_sineWaveProvider);
+            var asio = new AsioOut("Focusrite USB ASIO");
+            asio.Init(_sineWaveProvider);
 
             GenerateCommand = new RelayCommand(o =>
             {
+                asio.Play();
                 var generator = new DepthFirstSearchGenerator(Maze);
-                var timer = new DispatcherTimer { Interval = _timerTickInterval };
+                var timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(_timerTickMs)};
                 timer.Start();
                 timer.Tick += (sender, args) =>
                 {
-                    if (!generator.NextStep()) timer.Stop();
+                    var currentCell = generator.NextStep();
+                    if (currentCell == null) {
+                        timer.Stop();
+                        asio.Stop();
+                    }
+                    else
+                    {
+                        var freq = Tones.CalculateFrequency(currentCell.Row * cols + currentCell.Col, Maze.Cells.Count);
+                        _sineWaveProvider.Frequency = (float)freq;
+                    }
                 };
             });
             ResetCommand = new RelayCommand(o =>

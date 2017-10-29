@@ -23,8 +23,6 @@ namespace SoundOfPathfinding
     public partial class MainWindow : Window
     {
         public ViewModel ViewModel { get; set; }
-        //private WaveOut waveOut;
-        //private SineWaveProvider32 sineWaveProvider;
 
         public MainWindow()
         {                       

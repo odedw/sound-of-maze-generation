@@ -21,9 +21,9 @@ namespace SoundOfPathfinding.Generators
             startCell.CellState = CellState.Visiting;
         }
 
-        public bool NextStep()
+        public Cell NextStep()
         {
-            if (_cellStack.Count == 0) return false;
+            if (_cellStack.Count == 0) return null;
 
             var currentCell = _cellStack.Peek();
             var possibleDirections = currentCell.Neighbours.Where(kvp => kvp.Value.CellState != CellState.Visited);
@@ -31,7 +31,12 @@ namespace SoundOfPathfinding.Generators
             {
                 _cellStack.Pop();
                 currentCell.CellState = CellState.Visited;
-                if (_cellStack.Any()) _cellStack.Peek().CellState = CellState.Visiting;
+                if (_cellStack.Any())
+                {
+                    _cellStack.Peek().CellState = CellState.Visiting;
+                    return _cellStack.Peek();
+                }
+
             } else
             {
                 var randomDirection = possibleDirections.RandomElement(_rand);
@@ -39,8 +44,9 @@ namespace SoundOfPathfinding.Generators
                 _cellStack.Push(randomDirection.Value);
                 randomDirection.Value.CellState = CellState.Visiting;
                 currentCell.CellState = CellState.Visited;
+                return randomDirection.Value;
             }
-            return true;
+            return null;
         }
 
     }

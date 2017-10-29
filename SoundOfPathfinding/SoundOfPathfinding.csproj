@@ -60,10 +60,12 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Generators\DepthFirstSearchGenerator.cs" />
     <Compile Include="Generators\IMazeGenerator.cs" />
+    <Compile Include="Generators\KruskalsRandomizedGenerator.cs" />
     <Compile Include="Models\Cell.cs" />
     <Compile Include="Models\Maze.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="Sound\SineWaveProvider32.cs" />
+    <Compile Include="Sound\Tones.cs" />
     <Compile Include="ValueConverters.cs" />
     <Compile Include="ViewModel.cs" />
     <Page Include="MainWindow.xaml">

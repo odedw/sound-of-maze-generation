@@ -9,6 +9,6 @@ namespace SoundOfPathfinding.Generators
 {
     public interface IMazeGenerator
     {
-        bool NextStep();
+        Cell NextStep();
     }
 }
