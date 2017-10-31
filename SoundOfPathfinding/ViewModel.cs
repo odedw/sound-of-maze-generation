@@ -19,7 +19,7 @@ namespace SoundOfPathfinding
     {
         private SineWaveProvider32 _sineWaveProvider = new SineWaveProvider32();
 
-        private readonly int _timerTickMs = 20;
+        private readonly int _timerTickMs = 30;
 
         public ICommand GenerateCommand { get; set; }
         public ICommand ResetCommand { get; set; }
@@ -49,7 +49,8 @@ namespace SoundOfPathfinding
             GenerateCommand = new RelayCommand(o =>
             {
                 asio.Play();
-                var generator = new DepthFirstSearchGenerator(Maze);
+                //var generator = new DepthFirstSearchGenerator(Maze);
+                var generator = new KruskalsRandomizedGenerator(Maze);
                 var timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(_timerTickMs)};
                 timer.Start();
                 timer.Tick += (sender, args) =>
@@ -61,7 +62,9 @@ namespace SoundOfPathfinding
                     }
                     else
                     {
-                        var freq = Tones.CalculateFrequency(currentCell.Row * cols + currentCell.Col, Maze.Cells.Count);
+                        var distance = Math.Sqrt(Math.Pow(currentCell.Row, 2) + Math.Pow(currentCell.Col, 2));
+                        var total = Math.Sqrt(Math.Pow(rows, 2) + Math.Pow(cols, 2));
+                        var freq = Tones.CalculateFrequency(distance, total);
                         _sineWaveProvider.Frequency = (float)freq;
                     }
                 };

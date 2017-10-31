@@ -55,7 +55,7 @@ namespace SoundOfPathfinding
                 float freq = Frequency;
                 if (Frequency != lastFrequency)
                 {
-                    freq = ((sampleCount / 20 - n - 1) * lastFrequency + Frequency) / (sampleCount / 20 - n);
+                    freq = ((sampleCount - n - 1) * lastFrequency + Frequency) / (sampleCount - n);
                     lastFrequency = freq;
                 }
                 //Determine the value of the current sample
