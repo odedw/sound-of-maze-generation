@@ -13,7 +13,7 @@ namespace SoundOfMazeGeneration.Generators
         private HashSet<Cell> _frontier = new HashSet<Cell>();
         public PrimmsRandomizedGenerator(Maze maze)
         {
-            var startCell = maze.Cells.First();//maze.Cells.RandomElement(_rand);
+            var startCell = maze.Cells.First();
             startCell.CellState = CellState.Visited;
             AddNeighboursToFrontier(startCell);
         }
