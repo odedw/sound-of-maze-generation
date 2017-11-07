@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SoundOfPathfinding.Models;
+using SoundOfMazeGeneration.Models;
 
-namespace SoundOfPathfinding.Generators
+namespace SoundOfMazeGeneration.Generators
 {
     public class DepthFirstSearchGenerator : IMazeGenerator
     {

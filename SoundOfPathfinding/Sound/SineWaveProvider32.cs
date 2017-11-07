@@ -6,7 +6,7 @@ using NAudio;
 using NAudio.Wave;
 using NAudio.CoreAudioApi;
 
-namespace SoundOfPathfinding
+namespace SoundOfMazeGeneration
 {
     /*
      * Sources:

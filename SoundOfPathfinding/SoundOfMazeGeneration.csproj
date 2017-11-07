@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E2B3735D-4CA4-4CF1-A245-679D8BBF53D4}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>SoundOfPathfinding</RootNamespace>
-    <AssemblyName>SoundOfPathfinding</AssemblyName>
+    <RootNamespace>SoundOfMazeGeneration</RootNamespace>
+    <AssemblyName>SoundOfMazeGeneration</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>

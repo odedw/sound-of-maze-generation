@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace SoundOfPathfinding
+namespace SoundOfMazeGeneration
 {
     public class RelayCommand : ICommand
     {

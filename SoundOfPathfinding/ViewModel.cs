@@ -1,7 +1,7 @@
 ﻿using NAudio.Wave;
-using SoundOfPathfinding.Generators;
-using SoundOfPathfinding.Models;
-using SoundOfPathfinding.Sound;
+using SoundOfMazeGeneration.Generators;
+using SoundOfMazeGeneration.Models;
+using SoundOfMazeGeneration.Sound;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Threading;
 
-namespace SoundOfPathfinding
+namespace SoundOfMazeGeneration
 {
     public class ViewModel : INotifyPropertyChanged
     {

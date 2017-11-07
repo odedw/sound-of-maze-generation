@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2005
+VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoundOfPathfinding", "SoundOfPathfinding\SoundOfPathfinding.csproj", "{E2B3735D-4CA4-4CF1-A245-679D8BBF53D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoundOfMazeGeneration", "SoundOfPathfinding\SoundOfMazeGeneration.csproj", "{E2B3735D-4CA4-4CF1-A245-679D8BBF53D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

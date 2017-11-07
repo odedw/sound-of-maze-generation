@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace SoundOfPathfinding
+namespace SoundOfMazeGeneration
 {
     public class Cell : INotifyPropertyChanged
     {

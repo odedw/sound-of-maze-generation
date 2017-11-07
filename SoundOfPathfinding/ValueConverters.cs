@@ -9,7 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace SoundOfPathfinding
+namespace SoundOfMazeGeneration
 {
     public class CellStateToColor : IValueConverter
     {
