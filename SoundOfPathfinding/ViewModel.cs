@@ -19,7 +19,7 @@ namespace SoundOfPathfinding
     {
         private SineWaveProvider32 _sineWaveProvider = new SineWaveProvider32();
 
-        private readonly int _timerTickMs = 30;
+        private readonly int _timerTickMs = 40;
 
         public ICommand GenerateCommand { get; set; }
         public ICommand ResetCommand { get; set; }
@@ -40,9 +40,6 @@ namespace SoundOfPathfinding
         {
              Maze = new Maze(rows, cols);
             var rand = new Random();
-            //_sineWaveProvider.SetWaveFormat(16000, 1); // 16kHz mono
-            //var device = new DirectSoundOut(DirectSoundOut.Devices.First().Guid, _timerTickMs);
-            //device.Init(_sineWaveProvider);
             var asio = new AsioOut("Focusrite USB ASIO");
             asio.Init(_sineWaveProvider);
 
