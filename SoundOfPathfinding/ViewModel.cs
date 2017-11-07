@@ -47,15 +47,23 @@ namespace SoundOfMazeGeneration
             {
                 asio.Play();
                 //var generator = new DepthFirstSearchGenerator(Maze);
-                var generator = new KruskalsRandomizedGenerator(Maze);
+                //var generator = new KruskalsRandomizedGenerator(Maze);
+                var generator = new PrimmsRandomizedGenerator(Maze);
                 var timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(_timerTickMs)};
+                var stop = false;
                 timer.Start();
                 timer.Tick += (sender, args) =>
                 {
+                    if (stop)
+                    {
+                        asio.Stop();
+                        timer.Stop();
+                    }
                     var currentCell = generator.NextStep();
                     if (currentCell == null) {
-                        timer.Stop();
-                        asio.Stop();
+                        _sineWaveProvider.Frequency = 0;
+                        timer.Interval = TimeSpan.FromSeconds(0.5);
+                        stop = true;
                     }
                     else
                     {
