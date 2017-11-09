@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace SoundOfMazeGeneration.Generators
 {
-    public class PrimmsRandomizedGenerator : IMazeGenerator
+    public class PrimsRandomizedGenerator : IMazeGenerator
     {
         private Random _rand = new Random();
         private HashSet<Cell> _frontier = new HashSet<Cell>();
-        public PrimmsRandomizedGenerator(Maze maze)
+        public PrimsRandomizedGenerator(Maze maze)
         {
             var startCell = maze.Cells.First();
             startCell.CellState = CellState.Visited;

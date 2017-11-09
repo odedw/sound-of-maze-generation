@@ -59,9 +59,10 @@
     </ApplicationDefinition>
     <Compile Include="Extensions.cs" />
     <Compile Include="Generators\DepthFirstSearchGenerator.cs" />
+    <Compile Include="Generators\HuntAndKillGenerator.cs" />
     <Compile Include="Generators\IMazeGenerator.cs" />
     <Compile Include="Generators\KruskalsRandomizedGenerator.cs" />
-    <Compile Include="Generators\PrimmsRandomizedGenerator.cs" />
+    <Compile Include="Generators\PrimsRandomizedGenerator.cs" />
     <Compile Include="Models\Cell.cs" />
     <Compile Include="Models\Maze.cs" />
     <Compile Include="RelayCommand.cs" />
