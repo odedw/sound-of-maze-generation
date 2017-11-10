@@ -19,7 +19,7 @@ namespace SoundOfMazeGeneration
     {
         private SineWaveProvider32 _sineWaveProvider = new SineWaveProvider32();
 
-        private readonly int _timerTickMs = 40;
+        private readonly int _timerTickMs = 20;
 
         public ICommand GenerateCommand { get; set; }
         public ICommand ResetCommand { get; set; }
@@ -49,7 +49,8 @@ namespace SoundOfMazeGeneration
                 //var generator = new DepthFirstSearchGenerator(Maze);
                 //var generator = new KruskalsRandomizedGenerator(Maze);
                 //var generator = new PrimsRandomizedGenerator(Maze);
-                var generator = new HuntAndKillGenerator(Maze);
+                //var generator = new HuntAndKillGenerator(Maze);
+                var generator = new BinaryTreeGenerator(Maze);
                 var timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(_timerTickMs)};
                 var stop = false;
                 timer.Start();

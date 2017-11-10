@@ -58,6 +58,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Extensions.cs" />
+    <Compile Include="Generators\BinaryTreeGenerator.cs" />
     <Compile Include="Generators\DepthFirstSearchGenerator.cs" />
     <Compile Include="Generators\HuntAndKillGenerator.cs" />
     <Compile Include="Generators\IMazeGenerator.cs" />
