@@ -49,8 +49,8 @@ namespace SoundOfMazeGeneration
                 //var generator = new DepthFirstSearchGenerator(Maze);
                 //var generator = new KruskalsRandomizedGenerator(Maze);
                 //var generator = new PrimsRandomizedGenerator(Maze);
-                //var generator = new HuntAndKillGenerator(Maze);
-                var generator = new BinaryTreeGenerator(Maze);
+                var generator = new HuntAndKillGenerator(Maze);
+                //var generator = new BinaryTreeGenerator(Maze);
                 var timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(_timerTickMs)};
                 var stop = false;
                 timer.Start();
@@ -60,6 +60,7 @@ namespace SoundOfMazeGeneration
                     {
                         asio.Stop();
                         timer.Stop();
+                        return;
                     }
                     var currentCell = generator.NextStep();
                     if (currentCell == null) {

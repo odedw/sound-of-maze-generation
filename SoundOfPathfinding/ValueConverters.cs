@@ -19,13 +19,13 @@ namespace SoundOfMazeGeneration
             switch ((CellState)value)
             {
                 case CellState.Unvisited:
-                    color = Colors.Transparent;
+                    color = Colors.Black;
                     break;
                 case CellState.Visited:
-                    color = Colors.Transparent;
+                    color = Colors.White;
                     break;
                 case CellState.Visiting:
-                    color = Color.FromArgb(200, Colors.Green.R, Colors.Green.G, Colors.Green.B);
+                    color = Colors.LimeGreen ;
                     break;
             }
             return new SolidColorBrush(color);
@@ -38,38 +38,37 @@ namespace SoundOfMazeGeneration
         }
     }
 
-    public class CellToSpriteRect : IValueConverter
+    public class WallsStateToBorderThicknessConverter : IValueConverter
     {
-        private readonly Dictionary<Direction, Point> _spriteLocationByWalls = new Dictionary<Direction, Point>();
-        private const int TILE_SIZE = 16;
-
-        public CellToSpriteRect()
-        {
-            _spriteLocationByWalls[Direction.North| Direction.West] = new Point(0, 0);
-            _spriteLocationByWalls[Direction.West] = new Point(0, TILE_SIZE);
-            _spriteLocationByWalls[Direction.South | Direction.West] = new Point(0, TILE_SIZE * 2);
-            _spriteLocationByWalls[Direction.North] = new Point(TILE_SIZE, 0);
-            _spriteLocationByWalls[0] = new Point(TILE_SIZE, TILE_SIZE);
-            _spriteLocationByWalls[Direction.South] = new Point(TILE_SIZE, TILE_SIZE * 2);
-            _spriteLocationByWalls[Direction.North | Direction.East] = new Point(TILE_SIZE * 2, 0);
-            _spriteLocationByWalls[Direction.East] = new Point(TILE_SIZE * 2, TILE_SIZE);
-            _spriteLocationByWalls[Direction.South | Direction.East] = new Point(TILE_SIZE * 2, TILE_SIZE * 2);
-            _spriteLocationByWalls[Direction.North | Direction.West | Direction.East] = new Point(TILE_SIZE * 3, 0);
-            _spriteLocationByWalls[Direction.East | Direction.West] = new Point(TILE_SIZE * 3, TILE_SIZE);
-            _spriteLocationByWalls[Direction.South | Direction.West | Direction.East] = new Point(TILE_SIZE * 3, TILE_SIZE * 2);
-            _spriteLocationByWalls[Direction.North | Direction.West | Direction.South | Direction.East] = new Point(TILE_SIZE * 5, 0);
-            _spriteLocationByWalls[Direction.North | Direction.West | Direction.South] = new Point(TILE_SIZE * 4, TILE_SIZE);
-            _spriteLocationByWalls[Direction.North | Direction.South] = new Point(TILE_SIZE * 5, TILE_SIZE);
-            _spriteLocationByWalls[Direction.North | Direction.East | Direction.South] = new Point(TILE_SIZE * 6, TILE_SIZE);
-        }
-
+        const double WALL_THICKNESS = 1.5;
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var loc = _spriteLocationByWalls[(Direction)value];
-            return new Rect(loc.X, loc.Y, TILE_SIZE, TILE_SIZE);
+            var borderThickness = new Thickness();
+            if (((Direction)value & Direction.North) != 0) borderThickness.Top = WALL_THICKNESS;
+            if (((Direction)value & Direction.West) != 0) borderThickness.Left = WALL_THICKNESS;
+
+
+
+            return borderThickness;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class CornerVisibilityConverter : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            var walls = (Direction)values[0];
+            var row = (int)values[1];
+            return row != 0 && ((walls & Direction.West) == 0 && (walls & Direction.North) == 0) ?
+               Visibility.Visible : Visibility.Hidden;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

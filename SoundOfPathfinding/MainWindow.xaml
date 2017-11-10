@@ -3,22 +3,24 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SoundOfMazeGeneration"
         mc:Ignorable="d"
         Title="Sound of Pathfinding" Height="720" Width="1280" WindowStartupLocation="CenterScreen"
         HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Black">
     <Window.Resources>
         <DataTemplate x:Key="CellTemplate">
-            <Grid Height="{StaticResource CellSize}" Width="{StaticResource CellSize}" Margin="0" Background="Black" ToolTip="{Binding Description}">
-                <Rectangle>
-                    <Rectangle.Fill>
-                        <ImageBrush ImageSource="{StaticResource GridSprite}" ViewboxUnits="Absolute" Viewbox="{Binding Walls, Converter={StaticResource CellToSpriteRect}}"/>
-                    </Rectangle.Fill>
-                </Rectangle>
+            <Border Height="{StaticResource CellSize}" Width="{StaticResource CellSize}" Margin="0" Background="Black" ToolTip="{Binding Description}"
+                    BorderThickness="{Binding Walls, Converter={StaticResource WallsStateToBorderThicknessConverter}}" BorderBrush="Black">
                 <Grid Background="{Binding CellState, Converter={StaticResource CellStateToColor}}">
-                    
+                    <Grid Height="1.5" Width="1.5" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Black" >
+                        <Grid.Visibility>
+                            <MultiBinding Converter="{StaticResource CornerVisibilityConverter}">
+                                <Binding Path="Walls" />
+                                <Binding Path="Row" />
+                            </MultiBinding>
+                        </Grid.Visibility>
+                    </Grid>
                 </Grid>
-            </Grid>
+            </Border>
         </DataTemplate>
     </Window.Resources>
     <Window.InputBindings>
