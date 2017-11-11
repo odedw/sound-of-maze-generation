@@ -49,8 +49,9 @@ namespace SoundOfMazeGeneration
                 //var generator = new DepthFirstSearchGenerator(Maze);
                 //var generator = new KruskalsRandomizedGenerator(Maze);
                 //var generator = new PrimsRandomizedGenerator(Maze);
-                var generator = new HuntAndKillGenerator(Maze);
+                //var generator = new HuntAndKillGenerator(Maze);
                 //var generator = new BinaryTreeGenerator(Maze);
+                var generator = new EllersGenerator(Maze);
                 var timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(_timerTickMs)};
                 var stop = false;
                 timer.Start();

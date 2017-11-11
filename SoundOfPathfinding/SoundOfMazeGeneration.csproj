@@ -60,6 +60,7 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Generators\BinaryTreeGenerator.cs" />
     <Compile Include="Generators\DepthFirstSearchGenerator.cs" />
+    <Compile Include="Generators\EllersGenerator.cs" />
     <Compile Include="Generators\HuntAndKillGenerator.cs" />
     <Compile Include="Generators\IMazeGenerator.cs" />
     <Compile Include="Generators\KruskalsRandomizedGenerator.cs" />

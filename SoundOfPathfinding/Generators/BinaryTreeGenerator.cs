@@ -24,7 +24,7 @@ namespace SoundOfMazeGeneration.Generators
             _lastCell = _enumerator.Current;
             _lastCell.CellState = CellState.Visiting;
             
-            var possibleNeighbours = _lastCell.Neighbours.Where(kvp => kvp.Key == Direction.North || kvp.Key == Direction.West);
+            var possibleNeighbours = _lastCell.Neighbours.Where(kvp => kvp.Key == Direction.Up || kvp.Key == Direction.Left);
             if (possibleNeighbours.Any())
             {
                 var direction = possibleNeighbours.RandomElement(_rand).Key;

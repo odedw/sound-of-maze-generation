@@ -44,8 +44,8 @@ namespace SoundOfMazeGeneration
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var borderThickness = new Thickness();
-            if (((Direction)value & Direction.North) != 0) borderThickness.Top = WALL_THICKNESS;
-            if (((Direction)value & Direction.West) != 0) borderThickness.Left = WALL_THICKNESS;
+            if (((Direction)value & Direction.Up) != 0) borderThickness.Top = WALL_THICKNESS;
+            if (((Direction)value & Direction.Left) != 0) borderThickness.Left = WALL_THICKNESS;
 
 
 
@@ -64,7 +64,7 @@ namespace SoundOfMazeGeneration
         {
             var walls = (Direction)values[0];
             var row = (int)values[1];
-            return row != 0 && ((walls & Direction.West) == 0 && (walls & Direction.North) == 0) ?
+            return row != 0 && ((walls & Direction.Left) == 0 && (walls & Direction.Up) == 0) ?
                Visibility.Visible : Visibility.Hidden;
         }
 

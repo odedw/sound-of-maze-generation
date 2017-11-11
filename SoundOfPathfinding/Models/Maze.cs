@@ -48,14 +48,14 @@ namespace SoundOfMazeGeneration.Models
                     if (i < Rows - 1)
                     {
                         var southCell = Cells[j + (i + 1) * cols];
-                        cell.Neighbours[Direction.South] = southCell;
-                        southCell.Neighbours[Direction.North] = cell;
+                        cell.Neighbours[Direction.Down] = southCell;
+                        southCell.Neighbours[Direction.Up] = cell;
                     }
                     if (j < Cols - 1)
                     {
                         var eastCell = Cells[j + i * cols + 1];
-                        cell.Neighbours[Direction.East] = eastCell;
-                        eastCell.Neighbours[Direction.West] = cell;
+                        cell.Neighbours[Direction.Right] = eastCell;
+                        eastCell.Neighbours[Direction.Left] = cell;
                     }
                 }
             }
