@@ -9,6 +9,8 @@ namespace SoundOfMazeGeneration.Generators
 {
     public class HuntAndKillGenerator : IMazeGenerator
     {
+        public int RecommendedTimeStep => 20;
+
         private Maze _maze;
         private Cell _currentCell;
         private Random _rand = new Random();

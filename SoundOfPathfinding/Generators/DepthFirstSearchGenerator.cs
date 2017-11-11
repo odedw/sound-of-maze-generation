@@ -9,7 +9,8 @@ namespace SoundOfMazeGeneration.Generators
 {
     public class DepthFirstSearchGenerator : IMazeGenerator
     {
-        //private Maze _maze;
+        public int RecommendedTimeStep => 20;
+
         private Stack<Cell> _cellStack = new Stack<Cell>();
         private Random _rand = new Random();
 

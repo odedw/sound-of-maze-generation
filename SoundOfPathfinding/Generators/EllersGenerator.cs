@@ -9,6 +9,8 @@ namespace SoundOfMazeGeneration.Generators
 {
     public class EllersGenerator : IMazeGenerator
     {
+        public int RecommendedTimeStep => 20;
+
         private Maze _maze;
         private Random _rand = new Random();
         private int _row, _col;
@@ -26,6 +28,7 @@ namespace SoundOfMazeGeneration.Generators
                 _sets.Add(new HashSet<Cell>() { cell });
             }
         }
+
 
         public Cell NextStep()
         {

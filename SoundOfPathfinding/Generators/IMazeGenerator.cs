@@ -10,5 +10,6 @@ namespace SoundOfMazeGeneration.Generators
     public interface IMazeGenerator
     {
         Cell NextStep();
+        int RecommendedTimeStep { get; }
     }
 }

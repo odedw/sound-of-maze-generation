@@ -9,7 +9,8 @@ namespace SoundOfMazeGeneration.Generators
 {
     public class KruskalsRandomizedGenerator : IMazeGenerator
     {
-        //private Dictionary<Cell, HashSet<Cell>> _setByCell = new Dictionary<Cell, HashSet<Cell>>();
+        public int RecommendedTimeStep => 20;
+
         private List<HashSet<Cell>> _sets = new List<HashSet<Cell>>();
         private HashSet<Edge> _edges = new HashSet<Edge>();
         private Maze _maze;

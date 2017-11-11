@@ -9,6 +9,8 @@ namespace SoundOfMazeGeneration.Generators
 {
     public class BinaryTreeGenerator : IMazeGenerator
     {
+        public int RecommendedTimeStep => 20;
+
         private Random _rand = new Random();
         private IEnumerator<Cell> _enumerator;
         private Cell _lastCell;

@@ -9,6 +9,8 @@ namespace SoundOfMazeGeneration.Generators
 {
     public class PrimsRandomizedGenerator : IMazeGenerator
     {
+        public int RecommendedTimeStep => 20;
+
         private Random _rand = new Random();
         private HashSet<Cell> _frontier = new HashSet<Cell>();
         public PrimsRandomizedGenerator(Maze maze)
