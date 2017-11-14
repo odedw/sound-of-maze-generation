@@ -20,8 +20,8 @@ namespace SoundOfMazeGeneration.Generators
             _maze = maze;
             foreach (var cell in maze.Cells)
             {
-                if (cell.Neighbours.ContainsKey(Direction.Right)) _edges.Add(new Edge() { Cell = cell, Direction = Direction.Right });
-                if (cell.Neighbours.ContainsKey(Direction.Down)) _edges.Add(new Edge() { Cell = cell, Direction = Direction.Down });
+                if (cell.Neighbours.ContainsKey(Direction.East)) _edges.Add(new Edge() { Cell = cell, Direction = Direction.East });
+                if (cell.Neighbours.ContainsKey(Direction.South)) _edges.Add(new Edge() { Cell = cell, Direction = Direction.South });
             }
 
         }

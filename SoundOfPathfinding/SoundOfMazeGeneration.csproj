@@ -65,6 +65,7 @@
     <Compile Include="Generators\IMazeGenerator.cs" />
     <Compile Include="Generators\KruskalsRandomizedGenerator.cs" />
     <Compile Include="Generators\PrimsRandomizedGenerator.cs" />
+    <Compile Include="Generators\SidewinderGenerator.cs" />
     <Compile Include="Models\Cell.cs" />
     <Compile Include="Models\Maze.cs" />
     <Compile Include="RelayCommand.cs" />

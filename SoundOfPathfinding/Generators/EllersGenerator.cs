@@ -46,7 +46,7 @@ namespace SoundOfMazeGeneration.Generators
                     var setB = _sets.First(s => s.Contains(nextCell));
                     if (setA != setB && (_rand.NextDouble() > 0.5 || _row == _maze.Rows - 1)) //tunnel to next cell
                     {
-                        cell.Tunnel(Direction.Right);
+                        cell.Tunnel(Direction.East);
                         setA.UnionWith(setB);
                         _sets.Remove(setB);
                     }
@@ -69,10 +69,10 @@ namespace SoundOfMazeGeneration.Generators
                     var prevCellInSameSet = prevCell != null && cellSet == _sets.First(s => s.Contains(prevCell));
                     shouldTunnelDown = _rand.NextDouble() > 0.5 ||
                         (!_setsWithVerticalPass.Contains(cellSet) && !prevCellInSameSet);
-                    var downCell = cell.Neighbours[Direction.Down];
+                    var downCell = cell.Neighbours[Direction.South];
                     if (shouldTunnelDown)
                     {
-                        cell.Tunnel(Direction.Down);
+                        cell.Tunnel(Direction.South);
                         cellSet.Add(downCell);
                         downCell.CellState = CellState.Visiting;
                         cell = downCell;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace SoundOfMazeGeneration
+namespace SoundOfMazeGeneration.Models
 {
     public class Cell : INotifyPropertyChanged
     {
@@ -11,7 +11,7 @@ namespace SoundOfMazeGeneration
         public int Col { get; set; }
         public Dictionary<Direction, Cell> Neighbours { get; set; } = new Dictionary<Direction, Cell>();
 
-        private Direction _walls = Direction.Right | Direction.Left | Direction.Up | Direction.Down;
+        private Direction _walls = Direction.East | Direction.West | Direction.North | Direction.South;
         public Direction Walls
         {
             get { return _walls; }
@@ -81,10 +81,10 @@ namespace SoundOfMazeGeneration
     [Flags]
     public enum Direction
     {
-        Up = 1,
-        Right = 2,
-        Down = 4,
-        Left = 8
+        North = 1,
+        East = 2,
+        South = 4,
+        West = 8
     }
 
     public static class DirectionExtensions
@@ -93,24 +93,24 @@ namespace SoundOfMazeGeneration
         {
             switch (direction)
             {
-                case Direction.Right: return Direction.Left;
-                case Direction.Up: return Direction.Down;
-                case Direction.Down: return Direction.Up;
-                case Direction.Left: return Direction.Right;
+                case Direction.East: return Direction.West;
+                case Direction.North: return Direction.South;
+                case Direction.South: return Direction.North;
+                case Direction.West: return Direction.East;
             }
-            return Direction.Right;
+            return Direction.East;
         }
 
         public static Direction Rotate(this Direction direction, bool clockwise = true)
         {
             switch (direction)
             {
-                case Direction.Right: return clockwise ? Direction.Down : Direction.Up;
-                case Direction.Up: return clockwise ? Direction.Right : Direction.Left;
-                case Direction.Down: return clockwise ? Direction.Left : Direction.Right;
-                case Direction.Left: return clockwise ? Direction.Up : Direction.Down;
+                case Direction.East: return clockwise ? Direction.South : Direction.North;
+                case Direction.North: return clockwise ? Direction.East : Direction.West;
+                case Direction.South: return clockwise ? Direction.West : Direction.East;
+                case Direction.West: return clockwise ? Direction.North : Direction.South;
             }
-            return Direction.Right;
+            return Direction.East;
         }
     }
 }
