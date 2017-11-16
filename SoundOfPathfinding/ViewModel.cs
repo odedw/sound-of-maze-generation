@@ -18,12 +18,14 @@ namespace SoundOfMazeGeneration
     public class ViewModel : INotifyPropertyChanged
     {
         private SineWaveProvider32 _sineWaveProvider = new SineWaveProvider32();
-
+        private IMazeGenerator _generator;
 
         public ICommand GenerateCommand { get; set; }
         public ICommand ResetCommand { get; set; }
 
         private Maze _maze;
+        private AsioOut _asio;
+
         public Maze Maze
         {
             get { return _maze; }
@@ -39,51 +41,95 @@ namespace SoundOfMazeGeneration
         {
              Maze = new Maze(rows, cols);
             var rand = new Random();
-            var asio = new AsioOut("Focusrite USB ASIO");
-            asio.Init(_sineWaveProvider);
+            _asio = new AsioOut("Focusrite USB ASIO");
+            _asio.Init(_sineWaveProvider);
 
             GenerateCommand = new RelayCommand(o =>
             {
-                asio.Play();
-                //var generator = new DepthFirstSearchGenerator(Maze);
-                //var generator = new KruskalsRandomizedGenerator(Maze);
-                //var generator = new PrimsRandomizedGenerator(Maze);
-                //var generator = new HuntAndKillGenerator(Maze);
-                //var generator = new BinaryTreeGenerator(Maze);
-                //var generator = new EllersGenerator(Maze);
-                var generator = new SidewinderGenerator(Maze);
-                var timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(generator.RecommendedTimeStep)};
+                _asio.Play();
+                //_generator = new DepthFirstSearchGenerator(Maze);
+                //_generator = new KruskalsRandomizedGenerator(Maze);
+                //_generator = new PrimsRandomizedGenerator(Maze);
+                //_generator = new HuntAndKillGenerator(Maze);
+                //_generator = new BinaryTreeGenerator(Maze);
+                _generator = new EllersGenerator(Maze);
+                //_generator = new SidewinderGenerator(Maze);
+                var timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(_generator.RecommendedTimeStep)};
                 var stop = false;
                 timer.Start();
                 timer.Tick += (sender, args) =>
                 {
                     if (stop)
                     {
-                        asio.Stop();
+                        _asio.Stop();
                         timer.Stop();
+                        ScheduleReset();
                         return;
                     }
-                    var currentCell = generator.NextStep();
+                    var currentCell = _generator.NextStep();
                     if (currentCell == null) {
                         _sineWaveProvider.Frequency = 0;
                         timer.Interval = TimeSpan.FromSeconds(0.5);
                         stop = true;
                     }
                     else
-                    {
-                        var distance = Math.Sqrt(Math.Pow(currentCell.Row, 2) + Math.Pow(currentCell.Col, 2));
-                        var total = Math.Sqrt(Math.Pow(rows, 2) + Math.Pow(cols, 2));
-                        var freq = Tones.CalculateFrequency(distance, total);
-                        _sineWaveProvider.Frequency = (float)freq;
+                    {                                                
+                        _sineWaveProvider.Frequency = CellToFrequency(currentCell);
                     }
                 };
             });
             ResetCommand = new RelayCommand(o =>
             {
-                Maze = new Maze(rows, cols);
-
+                Reset();
             });
 
+        }
+
+        private void ScheduleReset()
+        {
+            var timer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(1) };
+            timer.Tick += (s,e) =>
+            {
+                Reset();
+                timer.Stop();
+            };
+            timer.Start();
+        }
+
+        private float CellToFrequency(Cell cell)
+        {
+            var distance = Math.Sqrt(Math.Pow(cell.Row, 2) + Math.Pow(cell.Col, 2));
+            var total = Math.Sqrt(Math.Pow(_maze.Rows, 2) + Math.Pow(_maze.Cols, 2));
+            var freq = Tones.CalculateFrequency(distance, total);
+            return (float)freq;
+        }
+
+        private void Reset()
+        {
+            var resetTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(1) };
+            _generator.Steps.Reverse();
+            var enumerator = _generator.Steps.GetEnumerator();
+            _asio.Play();
+            resetTimer.Tick += (s, p) =>
+            {
+                while (enumerator.MoveNext())
+                {
+                    if (enumerator.Current.CellState == CellState.Unvisited) continue;
+
+                    _sineWaveProvider.Frequency = CellToFrequency(enumerator.Current);
+                    enumerator.Current.CellState = CellState.Unvisited;
+                    enumerator.Current.Walls = Direction.East | Direction.North | Direction.South | Direction.West;
+                    break;
+                }
+                if (enumerator.Current == null)
+                {
+                    resetTimer.Stop();
+                    _sineWaveProvider.Frequency = 0;
+                    _asio.Stop();
+
+                }
+            };
+            resetTimer.Start();
         }
 
 

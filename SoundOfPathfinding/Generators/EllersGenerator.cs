@@ -7,21 +7,17 @@ using System.Threading.Tasks;
 
 namespace SoundOfMazeGeneration.Generators
 {
-    public class EllersGenerator : IMazeGenerator
+    public class EllersGenerator : BaseGenerator
     {
-        public int RecommendedTimeStep => 20;
-
-        private Maze _maze;
-        private Random _rand = new Random();
+        override public int RecommendedTimeStep => 20;
         private int _row, _col;
         private List<HashSet<Cell>> _sets = new List<HashSet<Cell>>();
         private HashSet<HashSet<Cell>> _setsWithVerticalPass = new HashSet<HashSet<Cell>>();
         private State _state;
         private Cell _lastCell;
 
-        public EllersGenerator(Maze maze)
+        public EllersGenerator(Maze maze) : base(maze)
         {
-            _maze = maze;
             foreach (var cell in maze.Cells)
             {
                 if (cell.Row > 0) break;
@@ -30,9 +26,9 @@ namespace SoundOfMazeGeneration.Generators
         }
 
 
-        public Cell NextStep()
+        override public Cell NextStep()
         {
-            if (_lastCell != null) _lastCell.CellState = CellState.Visited;
+            if (_lastCell != null) AddStep(_lastCell);
             Cell cell;
             if (_state == State.HorizontalTunneling)
             {

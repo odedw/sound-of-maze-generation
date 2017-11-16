@@ -7,20 +7,18 @@ using System.Threading.Tasks;
 
 namespace SoundOfMazeGeneration.Generators
 {
-    public class PrimsRandomizedGenerator : IMazeGenerator
+    public class PrimsRandomizedGenerator : BaseGenerator
     {
-        public int RecommendedTimeStep => 20;
-
-        private Random _rand = new Random();
+        override public int RecommendedTimeStep => 20;
         private HashSet<Cell> _frontier = new HashSet<Cell>();
-        public PrimsRandomizedGenerator(Maze maze)
+        public PrimsRandomizedGenerator(Maze maze) : base(maze)
         {
             var startCell = maze.Cells.First();
-            startCell.CellState = CellState.Visited;
+            AddStep(startCell);
             AddNeighboursToFrontier(startCell);
         }
 
-        public Cell NextStep()
+        override public Cell NextStep()
         {
             if (!_frontier.Any()) return null;
 
@@ -33,7 +31,7 @@ namespace SoundOfMazeGeneration.Generators
         private void Mark(Cell cell)
         {
             cell.Tunnel(cell.Neighbours.Where(kvp => kvp.Value.CellState == CellState.Visited).RandomElement(_rand).Key);
-            cell.CellState = CellState.Visited;
+            AddStep(cell);
             AddNeighboursToFrontier(cell);
         }
 

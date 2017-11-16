@@ -7,22 +7,19 @@ using SoundOfMazeGeneration.Models;
 
 namespace SoundOfMazeGeneration.Generators
 {
-    public class DepthFirstSearchGenerator : IMazeGenerator
+    public class DepthFirstSearchGenerator : BaseGenerator
     {
-        public int RecommendedTimeStep => 20;
-
+        override public int RecommendedTimeStep => 20;
         private Stack<Cell> _cellStack = new Stack<Cell>();
-        private Random _rand = new Random();
 
-        public DepthFirstSearchGenerator(Maze maze)
+        public DepthFirstSearchGenerator(Maze maze) : base(maze)
         {
-            //_maze = maze;
             var startCell = maze.Cells.First();
             _cellStack.Push(startCell);
             startCell.CellState = CellState.Visiting;
         }
 
-        public Cell NextStep()
+        override public Cell NextStep()
         {
             if (_cellStack.Count == 0) return null;
 
@@ -31,7 +28,7 @@ namespace SoundOfMazeGeneration.Generators
             if (!possibleDirections.Any())
             {
                 _cellStack.Pop();
-                currentCell.CellState = CellState.Visited;
+                AddStep(currentCell);
                 if (_cellStack.Any())
                 {
                     _cellStack.Peek().CellState = CellState.Visiting;
@@ -44,7 +41,7 @@ namespace SoundOfMazeGeneration.Generators
                 currentCell.Tunnel(randomDirection.Key);
                 _cellStack.Push(randomDirection.Value);
                 randomDirection.Value.CellState = CellState.Visiting;
-                currentCell.CellState = CellState.Visited;
+                AddStep(currentCell);
                 return randomDirection.Value;
             }
             return null;

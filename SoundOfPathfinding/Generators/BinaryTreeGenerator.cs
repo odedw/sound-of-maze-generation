@@ -7,21 +7,20 @@ using System.Threading.Tasks;
 
 namespace SoundOfMazeGeneration.Generators
 {
-    public class BinaryTreeGenerator : IMazeGenerator
+    public class BinaryTreeGenerator : BaseGenerator
     {
-        public int RecommendedTimeStep => 20;
-
-        private Random _rand = new Random();
+        override public int RecommendedTimeStep => 20;
         private IEnumerator<Cell> _enumerator;
         private Cell _lastCell;
-        public BinaryTreeGenerator(Maze maze)
+
+        public BinaryTreeGenerator(Maze maze) : base(maze)
         {
             _enumerator = maze.Cells.GetEnumerator();
         }
 
-        public Cell NextStep()
+        override public Cell NextStep()
         {
-            if (_lastCell != null) _lastCell.CellState = CellState.Visited;
+            if (_lastCell != null) AddStep(_lastCell);
             if (!_enumerator.MoveNext()) return null;
             _lastCell = _enumerator.Current;
             _lastCell.CellState = CellState.Visiting;

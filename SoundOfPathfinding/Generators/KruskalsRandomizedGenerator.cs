@@ -7,17 +7,14 @@ using System.Threading.Tasks;
 
 namespace SoundOfMazeGeneration.Generators
 {
-    public class KruskalsRandomizedGenerator : IMazeGenerator
+    public class KruskalsRandomizedGenerator : BaseGenerator
     {
-        public int RecommendedTimeStep => 20;
-
+        override public int RecommendedTimeStep => 20;
         private List<HashSet<Cell>> _sets = new List<HashSet<Cell>>();
         private HashSet<Edge> _edges = new HashSet<Edge>();
-        private Maze _maze;
-        private Random _rand = new Random();
-        public KruskalsRandomizedGenerator(Maze maze)
+        private Edge _currentEdge;
+        public KruskalsRandomizedGenerator(Maze maze) : base(maze)
         {
-            _maze = maze;
             foreach (var cell in maze.Cells)
             {
                 if (cell.Neighbours.ContainsKey(Direction.East)) _edges.Add(new Edge() { Cell = cell, Direction = Direction.East });
@@ -26,9 +23,7 @@ namespace SoundOfMazeGeneration.Generators
 
         }
 
-        private Edge _currentEdge;
-
-        public Cell NextStep()
+        override public Cell NextStep()
         {
 
             if (_currentEdge == null)
@@ -66,7 +61,8 @@ namespace SoundOfMazeGeneration.Generators
                     setA.UnionWith(setB);
                     if (!_sets.Contains(setA)) _sets.Add(setA);
                 }
-                neighbour.CellState = edge.Cell.CellState = CellState.Visited;
+                AddStep(neighbour);
+                AddStep(edge.Cell);
                 return neighbour;
             }
         }

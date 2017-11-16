@@ -11,5 +11,7 @@ namespace SoundOfMazeGeneration.Generators
     {
         Cell NextStep();
         int RecommendedTimeStep { get; }
+        List<Cell> Steps { get; }
+
     }
 }

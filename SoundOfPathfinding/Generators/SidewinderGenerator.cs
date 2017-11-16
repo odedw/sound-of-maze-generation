@@ -8,34 +8,30 @@ using System.Threading.Tasks;
 
 namespace SoundOfMazeGeneration.Generators
 {
-    public class SidewinderGenerator : IMazeGenerator
+    public class SidewinderGenerator : BaseGenerator
     {
-        public int RecommendedTimeStep => 40;
+        override public int RecommendedTimeStep => 40;
         private List<Cell> _currentSet = new List<Cell>();
         private Cell _lastCell;
-        private Random _rand = new Random();
-        private Maze _maze;
         private IEnumerator<Cell> _enumerator;
         private int _row;
 
-        public SidewinderGenerator(Maze maze)
+        public SidewinderGenerator(Maze maze) : base(maze)
         {
-            _maze = maze;
             _enumerator = maze.Cells.GetEnumerator();
-            //_currentCell = _enumerator.MoveNext();
         }
 
-        public Cell NextStep()
+        override public Cell NextStep()
         {
             if (_lastCell != null)
             {
-                _lastCell.CellState = CellState.Visited;
+                AddStep(_lastCell);
                 _lastCell = null;
             }
             if (!_enumerator.MoveNext()) return null;
 
             var cell = _enumerator.Current;
-            cell.CellState = CellState.Visited;
+            AddStep(cell);
 
             if (cell.Row != _row)
             {

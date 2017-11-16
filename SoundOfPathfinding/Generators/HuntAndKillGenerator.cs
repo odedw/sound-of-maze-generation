@@ -7,27 +7,23 @@ using System.Threading.Tasks;
 
 namespace SoundOfMazeGeneration.Generators
 {
-    public class HuntAndKillGenerator : IMazeGenerator
+    public class HuntAndKillGenerator : BaseGenerator
     {
-        public int RecommendedTimeStep => 20;
-
-        private Maze _maze;
+        override public int RecommendedTimeStep => 20;
         private Cell _currentCell;
-        private Random _rand = new Random();
         private State _state;
         private Cell _lastCell;
 
-        public HuntAndKillGenerator(Maze maze)
+        public HuntAndKillGenerator(Maze maze) : base(maze)
         {
-            _maze = maze;
             _currentCell = _maze.Cells.RandomElement(_rand);
             _currentCell.CellState = CellState.Visiting;
             _state = State.Kill;
         }
 
-        public Cell NextStep()
+        override public Cell NextStep()
         {
-            if (_lastCell != null) _lastCell.CellState = CellState.Visited;
+            if (_lastCell != null) AddStep(_lastCell);
             if (_currentCell == null)
                 return null;
 
@@ -39,7 +35,7 @@ namespace SoundOfMazeGeneration.Generators
                 {
                     var neighbour = possibleNeighbours.RandomElement(_rand);
                     _currentCell.Tunnel(neighbour.Key);
-                    _currentCell.CellState = CellState.Visited;
+                    AddStep(_currentCell);
                     _currentCell = neighbour.Value;
                     _currentCell.CellState = CellState.Visiting;
                 } else
@@ -59,7 +55,7 @@ namespace SoundOfMazeGeneration.Generators
                 return neighbour.Value;
 
             }
-            if (_currentCell == null) _lastCell.CellState = CellState.Visited;
+            if (_currentCell == null) AddStep(_lastCell);
             return _currentCell;
         }
 
