@@ -17,8 +17,7 @@ namespace SoundOfMazeGeneration.Generators
         public HuntAndKillGenerator(Maze maze) : base(maze)
         {
             _currentCell = _maze.Cells.RandomElement(_rand);
-            _currentCell.CellState = CellState.Visiting;
-            _state = State.Kill;
+            _state = State.Start;
         }
 
         override public Cell NextStep()
@@ -27,7 +26,12 @@ namespace SoundOfMazeGeneration.Generators
             if (_currentCell == null)
                 return null;
 
-            if (_state == State.Kill)
+            if (_state == State.Start)
+            {
+                _currentCell.CellState = CellState.Visiting;
+                _state = State.Kill;
+                return _currentCell;
+            } else if (_state == State.Kill)
             {
                 var start = DateTime.Now;
                 var possibleNeighbours = _currentCell.Neighbours.Where(kvp => kvp.Value.CellState == CellState.Unvisited);
@@ -61,6 +65,7 @@ namespace SoundOfMazeGeneration.Generators
 
         private enum State
         {
+            Start,
             Hunt,
             Kill
         }

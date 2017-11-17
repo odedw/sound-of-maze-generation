@@ -10,7 +10,7 @@ namespace SoundOfMazeGeneration.Generators
 {
     public class SidewinderGenerator : BaseGenerator
     {
-        override public int RecommendedTimeStep => 40;
+        override public int RecommendedTimeStep => 20;
         private List<Cell> _currentSet = new List<Cell>();
         private Cell _lastCell;
         private IEnumerator<Cell> _enumerator;

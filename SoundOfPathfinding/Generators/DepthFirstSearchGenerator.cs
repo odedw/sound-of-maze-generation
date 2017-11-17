@@ -11,16 +11,22 @@ namespace SoundOfMazeGeneration.Generators
     {
         override public int RecommendedTimeStep => 20;
         private Stack<Cell> _cellStack = new Stack<Cell>();
-
+        private bool firstStep = true;
         public DepthFirstSearchGenerator(Maze maze) : base(maze)
         {
             var startCell = maze.Cells.First();
             _cellStack.Push(startCell);
-            startCell.CellState = CellState.Visiting;
         }
 
         override public Cell NextStep()
         {
+            if (firstStep)
+            {
+                _cellStack.Peek().CellState = CellState.Visiting;
+                firstStep = false;
+                return _cellStack.Peek();
+            }
+
             if (_cellStack.Count == 0) return null;
 
             var currentCell = _cellStack.Peek();

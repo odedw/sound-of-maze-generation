@@ -11,15 +11,23 @@ namespace SoundOfMazeGeneration.Generators
     {
         override public int RecommendedTimeStep => 20;
         private HashSet<Cell> _frontier = new HashSet<Cell>();
+        private bool firstStep = true;
         public PrimsRandomizedGenerator(Maze maze) : base(maze)
         {
-            var startCell = maze.Cells.First();
-            AddStep(startCell);
-            AddNeighboursToFrontier(startCell);
+            
         }
 
         override public Cell NextStep()
         {
+            if (firstStep)
+            {
+                var startCell = _maze.Cells.First();
+                AddStep(startCell);
+                AddNeighboursToFrontier(startCell);
+                firstStep = false;
+                return startCell;
+            }
+
             if (!_frontier.Any()) return null;
 
             var cell = _frontier.RandomElement(_rand);

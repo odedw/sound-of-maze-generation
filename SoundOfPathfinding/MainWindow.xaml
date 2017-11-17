@@ -25,7 +25,6 @@
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Key="Space" Command="{Binding GenerateCommand}" />
-        <KeyBinding Key="Backspace" Command="{Binding ResetCommand}" />
     </Window.InputBindings>
     <Grid Background="#222222" >
         <ItemsControl x:Name="ItemsControl" ItemTemplate="{DynamicResource CellTemplate}" ItemsSource="{Binding Maze.Cells}">
