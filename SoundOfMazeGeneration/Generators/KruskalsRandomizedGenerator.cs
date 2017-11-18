@@ -9,6 +9,8 @@ namespace SoundOfMazeGeneration.Generators
 {
     public class KruskalsRandomizedGenerator : BaseGenerator
     {
+        public override string Name => "Randomized Kruskal's Algorithm";
+
         override public int RecommendedTimeStep => 20;
         private List<HashSet<Cell>> _sets = new List<HashSet<Cell>>();
         private HashSet<Edge> _edges = new HashSet<Edge>();

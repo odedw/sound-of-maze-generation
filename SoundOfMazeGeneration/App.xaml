@@ -5,10 +5,10 @@
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <system:Double x:Key="CellSize">20</system:Double>
+        <system:Double x:Key="CellSize">40</system:Double>
         <system:Int16 x:Key="Rows">15</system:Int16>
         <system:Int16 x:Key="Cols">20</system:Int16>
-        <system:Double x:Key="BorderThickness">0.9</system:Double>
+        <system:Double x:Key="BorderThickness">1.5</system:Double>
         <local:CellStateToColor x:Key="CellStateToColor"/>
         <local:WallsStateToBorderThicknessConverter x:Key="WallsStateToBorderThicknessConverter"/>
         <local:SizeToCanvasSizeConverter x:Key="SizeToCanvasSizeConverter"/>

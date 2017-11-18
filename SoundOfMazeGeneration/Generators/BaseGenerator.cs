@@ -9,9 +9,11 @@ namespace SoundOfMazeGeneration.Generators
 {
     public abstract class BaseGenerator : IMazeGenerator
     {
+        
         abstract public int RecommendedTimeStep { get; }
         abstract public Cell NextStep();
         public List<Cell> Steps { get; } = new List<Cell>();
+        abstract public string Name { get; }
         private HashSet<Cell> _visitedCells = new HashSet<Cell>();
         protected Random _rand = new Random();
         protected Maze _maze;

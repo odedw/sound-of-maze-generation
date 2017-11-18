@@ -9,6 +9,8 @@ namespace SoundOfMazeGeneration.Generators
 {
     public class PrimsRandomizedGenerator : BaseGenerator
     {
+        public override string Name => "Randomized Prim's Algorithm";
+
         override public int RecommendedTimeStep => 20;
         private HashSet<Cell> _frontier = new HashSet<Cell>();
         private bool firstStep = true;

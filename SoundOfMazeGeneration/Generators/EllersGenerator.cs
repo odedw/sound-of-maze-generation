@@ -9,6 +9,8 @@ namespace SoundOfMazeGeneration.Generators
 {
     public class EllersGenerator : BaseGenerator
     {
+        public override string Name => "Eller's Algorithm";
+
         override public int RecommendedTimeStep => 20;
         private int _row, _col;
         private List<HashSet<Cell>> _sets = new List<HashSet<Cell>>();

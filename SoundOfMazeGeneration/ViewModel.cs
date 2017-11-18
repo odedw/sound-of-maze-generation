@@ -24,11 +24,12 @@ namespace SoundOfMazeGeneration
         private int _currentGeneratorIndex;
         private Maze _maze;
         private AsioOut _asio;
-        private IMazeGenerator _currentGenerator;
+       // private WaveOut waveOut;
+        private IMazeGenerator _generator;
         private State _state;
         private readonly double CELL_SIZE = (Double)Application.Current.Resources["CellSize"];
         private readonly double BORDER_THICKNESS = (Double)Application.Current.Resources["BorderThickness"];
-
+        private int _stepCount;
         public Maze Maze
         {
             get { return _maze; }
@@ -36,6 +37,28 @@ namespace SoundOfMazeGeneration
             {
                 if (_maze == value) return;
                 _maze = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public IMazeGenerator Generator
+        {
+            get { return _generator; }
+            set
+            {
+                if (_generator == value) return;
+                _generator = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public int StepCount
+        {
+            get { return _stepCount; }
+            set
+            {
+                if (_stepCount == value) return;
+                _stepCount = value;
                 NotifyPropertyChanged();
             }
         }
@@ -61,11 +84,15 @@ namespace SoundOfMazeGeneration
 
             _asio = new AsioOut("Focusrite USB ASIO");
             _asio.Init(_sineWaveProvider);
+            //waveOut = new WaveOut();
+            //waveOut.Init(_sineWaveProvider);
 
             GenerateCommand = new RelayCommand(o =>
             {
                 _sineWaveProvider.Frequency = 0;
                 _asio.Play();
+                //waveOut.Play();
+
                 RunGenerator();
             });
         }
@@ -80,13 +107,14 @@ namespace SoundOfMazeGeneration
             {
                 if (_state == State.Initializing)
                 {
-                    _currentGenerator = _generators[_currentGeneratorIndex];
-                    timer.Interval = TimeSpan.FromMilliseconds(_currentGenerator.RecommendedTimeStep);
+                    Generator = _generators[_currentGeneratorIndex];
+                    StepCount = 0;
+                    timer.Interval = TimeSpan.FromMilliseconds(Generator.RecommendedTimeStep);
                     _state = State.Running;
                 }
                 if (_state == State.Running)
                 {
-                    var currentCell = _currentGenerator.NextStep();
+                    var currentCell = Generator.NextStep();
                     if (currentCell == null)
                     {
                         _state = State.StartReset;
@@ -96,12 +124,13 @@ namespace SoundOfMazeGeneration
                     else
                     {
                         _sineWaveProvider.Frequency = CellToFrequency(currentCell);
+                        StepCount++;
                     }
                 } else if (_state == State.StartReset)
                 {
-                        timer.Interval = TimeSpan.FromMilliseconds(1);
-                        _currentGenerator.Steps.Reverse();
-                        enumerator = _currentGenerator.Steps.GetEnumerator();
+                        timer.Interval = TimeSpan.FromMilliseconds(0.5);
+                    Generator.Steps.Reverse();
+                        enumerator = Generator.Steps.GetEnumerator();
                     _state = State.Resetting;
                 } else if (_state == State.Resetting)
                 {
@@ -123,10 +152,11 @@ namespace SoundOfMazeGeneration
                     _sineWaveProvider.Frequency = 0;
                     timer.Interval = TimeSpan.FromSeconds(1);
                     _currentGeneratorIndex++;
-                    _state = _currentGeneratorIndex + 1 == _generators.Count ? State.End : State.Initializing;
+                    _state = _currentGeneratorIndex == _generators.Count ? State.End : State.Initializing;
                 } else if (_state == State.End)
                 {
                     _asio.Stop();
+                    //waveOut.Stop();
                     timer.Stop();
                 }
             };

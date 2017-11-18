@@ -10,6 +10,7 @@ namespace SoundOfMazeGeneration.Generators
     public class DepthFirstSearchGenerator : BaseGenerator
     {
         override public int RecommendedTimeStep => 20;
+        public override string Name => "Depth First Search Algorithm";
         private Stack<Cell> _cellStack = new Stack<Cell>();
         private bool firstStep = true;
         public DepthFirstSearchGenerator(Maze maze) : base(maze)

@@ -20,7 +20,6 @@
                     BorderThickness="{Binding Walls, Converter={StaticResource WallsStateToBorderThicknessConverter}}" 
                     BorderBrush="Black">
                 <Grid Background="{Binding CellState, Converter={StaticResource CellStateToColor}}">
-                <!--<Grid Background="Black">-->
                 </Grid>
             </Border>
         </DataTemplate>
@@ -28,8 +27,40 @@
     <Window.InputBindings>
         <KeyBinding Key="Space" Command="{Binding GenerateCommand}" />
     </Window.InputBindings>
-    <Grid Background="#222222" >
-        <ItemsControl x:Name="ItemsControl" ItemTemplate="{DynamicResource CellTemplate}" ItemsSource="{Binding Maze.Cells}">
+    <Grid Background="#333333" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <TextBlock Text="{Binding Generator.Name}" Margin="235,630,0,0">
+            <TextBlock.Style>
+                <Style>
+                    <Setter Property="TextBlock.FontSize" Value="18" />
+                    <Setter Property="TextBlock.Foreground" Value="White"/>
+                </Style>
+            </TextBlock.Style>
+            <TextBlock.Effect>
+                <DropShadowEffect
+                    ShadowDepth="4"
+                    Direction="330"
+                    Color="Black"
+                    Opacity="0.5"
+                    BlurRadius="4"/>
+            </TextBlock.Effect>
+        </TextBlock>
+        <TextBlock Text="{Binding StepCount, StringFormat=Steps: {0}}" Margin="952,630,0,0">
+            <TextBlock.Style>
+                <Style>
+                    <Setter Property="TextBlock.FontSize" Value="18" />
+                    <Setter Property="TextBlock.Foreground" Value="White"/>
+                </Style>
+            </TextBlock.Style>
+            <TextBlock.Effect>
+                <DropShadowEffect
+                    ShadowDepth="4"
+                    Direction="330"
+                    Color="Black"
+                    Opacity="0.5"
+                    BlurRadius="4"/>
+            </TextBlock.Effect>
+        </TextBlock>
+        <ItemsControl x:Name="ItemsControl" ItemTemplate="{DynamicResource CellTemplate}" ItemsSource="{Binding Maze.Cells}" Margin="0,0,0,32">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Canvas Height="{Binding Cols, Converter={StaticResource SizeToCanvasSizeConverter}}" 

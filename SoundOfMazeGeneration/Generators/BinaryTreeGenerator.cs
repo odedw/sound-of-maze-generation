@@ -9,6 +9,8 @@ namespace SoundOfMazeGeneration.Generators
 {
     public class BinaryTreeGenerator : BaseGenerator
     {
+        public override string Name => "Binary Tree Algorithm";
+
         override public int RecommendedTimeStep => 20;
         private IEnumerator<Cell> _enumerator;
         private Cell _lastCell;

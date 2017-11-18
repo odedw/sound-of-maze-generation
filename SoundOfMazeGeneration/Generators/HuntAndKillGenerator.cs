@@ -9,6 +9,8 @@ namespace SoundOfMazeGeneration.Generators
 {
     public class HuntAndKillGenerator : BaseGenerator
     {
+        public override string Name => "Hunt & Kill Algorithm";
+
         override public int RecommendedTimeStep => 20;
         private Cell _currentCell;
         private State _state;

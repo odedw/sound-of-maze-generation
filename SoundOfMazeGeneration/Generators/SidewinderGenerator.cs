@@ -10,6 +10,8 @@ namespace SoundOfMazeGeneration.Generators
 {
     public class SidewinderGenerator : BaseGenerator
     {
+        public override string Name => "Sidewinder Algorithm";
+
         override public int RecommendedTimeStep => 20;
         private List<Cell> _currentSet = new List<Cell>();
         private Cell _lastCell;
