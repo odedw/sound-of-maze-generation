@@ -23,7 +23,7 @@ namespace SoundOfMazeGeneration
                     color = Colors.Black;
                     break;
                 case CellState.Visited:
-                    color = Colors.White;
+                    color = Colors.Transparent;
                     break;
                 case CellState.Visiting:
                     color = Colors.LimeGreen ;
@@ -41,15 +41,15 @@ namespace SoundOfMazeGeneration
 
     public class WallsStateToBorderThicknessConverter : IValueConverter
     {
-        const double WALL_THICKNESS = 1.5;
+        private readonly double BORDER_THICKNESS = (Double)Application.Current.Resources["BorderThickness"];
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var borderThickness = new Thickness();
-            if (((Direction)value & Direction.North) != 0) borderThickness.Top = WALL_THICKNESS;
-            if (((Direction)value & Direction.West) != 0) borderThickness.Left = WALL_THICKNESS;
-
-
-
+            if (((Direction)value & Direction.North) != 0) borderThickness.Top = BORDER_THICKNESS;
+            if (((Direction)value & Direction.West) != 0) borderThickness.Left = BORDER_THICKNESS;
+            if (((Direction)value & Direction.East) != 0) borderThickness.Right = BORDER_THICKNESS;
+            if (((Direction)value & Direction.South) != 0) borderThickness.Bottom = BORDER_THICKNESS;
             return borderThickness;
         }
 
@@ -59,17 +59,51 @@ namespace SoundOfMazeGeneration
         }
     }
 
-    public class CornerVisibilityConverter : IMultiValueConverter
+    public class SizeToCanvasSizeConverter : IValueConverter
     {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        private readonly double CELL_SIZE = (Double)Application.Current.Resources["CellSize"];
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var walls = (Direction)values[0];
-            var row = (int)values[1];
-            return row != 0 && ((walls & Direction.West) == 0 && (walls & Direction.North) == 0) ?
-               Visibility.Visible : Visibility.Hidden;
+            var count = (int)value;
+            return count * CELL_SIZE;
         }
 
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class PositionToCanvasPositionConverter : IValueConverter
+    {
+        private readonly double CELL_SIZE = (Double)Application.Current.Resources["CellSize"];
+        private readonly double BORDER_THICKNESS = (Double)Application.Current.Resources["BorderThickness"];
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var pos = (int)value;
+            return pos * CELL_SIZE - BORDER_THICKNESS;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class CellSizeConverter : IValueConverter
+    {
+        private readonly double CELL_SIZE = (Double)Application.Current.Resources["CellSize"];
+        private readonly double BORDER_THICKNESS = (Double)Application.Current.Resources["BorderThickness"];
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var pos = (int)value;
+            return pos * CELL_SIZE - BORDER_THICKNESS;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

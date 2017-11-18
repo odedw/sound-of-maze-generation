@@ -10,6 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 
@@ -25,6 +26,8 @@ namespace SoundOfMazeGeneration
         private AsioOut _asio;
         private IMazeGenerator _currentGenerator;
         private State _state;
+        private readonly double CELL_SIZE = (Double)Application.Current.Resources["CellSize"];
+        private readonly double BORDER_THICKNESS = (Double)Application.Current.Resources["BorderThickness"];
 
         public Maze Maze
         {
@@ -35,6 +38,11 @@ namespace SoundOfMazeGeneration
                 _maze = value;
                 NotifyPropertyChanged();
             }
+        }
+
+        public double CanvasCellSize
+        {
+            get { return CELL_SIZE + BORDER_THICKNESS * 2; }
         }
 
         public ViewModel(int rows, int cols)
@@ -56,6 +64,7 @@ namespace SoundOfMazeGeneration
 
             GenerateCommand = new RelayCommand(o =>
             {
+                _sineWaveProvider.Frequency = 0;
                 _asio.Play();
                 RunGenerator();
             });

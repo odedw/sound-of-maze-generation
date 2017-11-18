@@ -8,17 +8,19 @@
         HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Black">
     <Window.Resources>
         <DataTemplate x:Key="CellTemplate">
-            <Border Height="{StaticResource CellSize}" Width="{StaticResource CellSize}" Margin="0" Background="Black" ToolTip="{Binding Description}"
-                    BorderThickness="{Binding Walls, Converter={StaticResource WallsStateToBorderThicknessConverter}}" BorderBrush="Black">
+            <Border 
+                Height="{Binding Path=DataContext.CanvasCellSize,
+                          RelativeSource={RelativeSource Mode=FindAncestor,
+                                                         AncestorType=Window}}" 
+                    Width="{Binding Path=DataContext.CanvasCellSize,
+                          RelativeSource={RelativeSource Mode=FindAncestor,
+                                                         AncestorType=Window}}" 
+                    Background="Transparent" 
+                    ToolTip="{Binding Description}"
+                    BorderThickness="{Binding Walls, Converter={StaticResource WallsStateToBorderThicknessConverter}}" 
+                    BorderBrush="Black">
                 <Grid Background="{Binding CellState, Converter={StaticResource CellStateToColor}}">
-                    <Grid Height="1.5" Width="1.5" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Black" >
-                        <Grid.Visibility>
-                            <MultiBinding Converter="{StaticResource CornerVisibilityConverter}">
-                                <Binding Path="Walls" />
-                                <Binding Path="Row" />
-                            </MultiBinding>
-                        </Grid.Visibility>
-                    </Grid>
+                <!--<Grid Background="Black">-->
                 </Grid>
             </Border>
         </DataTemplate>
@@ -30,10 +32,17 @@
         <ItemsControl x:Name="ItemsControl" ItemTemplate="{DynamicResource CellTemplate}" ItemsSource="{Binding Maze.Cells}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Horizontal"
-                               />
+                    <Canvas Height="{Binding Cols, Converter={StaticResource SizeToCanvasSizeConverter}}" 
+                            Width="{Binding Rows, Converter={StaticResource SizeToCanvasSizeConverter}}"
+                            Background="White"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="Canvas.Left" Value="{Binding Col, Converter={StaticResource PositionToCanvasPositionConverter}}" />
+                    <Setter Property="Canvas.Top" Value="{Binding Row, Converter={StaticResource PositionToCanvasPositionConverter}}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
         </ItemsControl>
     </Grid>
 </Window>

@@ -1,1 +1,1 @@
-# SoundOfPathfinding
+# Sound of Maze Generation
