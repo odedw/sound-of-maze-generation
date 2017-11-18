@@ -28,10 +28,10 @@
         <KeyBinding Key="Space" Command="{Binding GenerateCommand}" />
     </Window.InputBindings>
     <Grid Background="#333333" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <TextBlock Text="{Binding Generator.Name}" Margin="235,630,0,0">
+        <TextBlock Text="{Binding Generator.Name}" Margin="235,635,0,0">
             <TextBlock.Style>
                 <Style>
-                    <Setter Property="TextBlock.FontSize" Value="18" />
+                    <Setter Property="TextBlock.FontSize" Value="22" />
                     <Setter Property="TextBlock.Foreground" Value="White"/>
                 </Style>
             </TextBlock.Style>
@@ -44,10 +44,10 @@
                     BlurRadius="4"/>
             </TextBlock.Effect>
         </TextBlock>
-        <TextBlock Text="{Binding StepCount, StringFormat=Steps: {0}}" Margin="952,630,0,0">
+        <TextBlock Text="{Binding StepCount, StringFormat=Steps: {0}}" Margin="930,635,0,0">
             <TextBlock.Style>
                 <Style>
-                    <Setter Property="TextBlock.FontSize" Value="18" />
+                    <Setter Property="TextBlock.FontSize" Value="22" />
                     <Setter Property="TextBlock.Foreground" Value="White"/>
                 </Style>
             </TextBlock.Style>
